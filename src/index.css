@@ -1,6 +1,7 @@
 /**
- * bleedblend - v2.1.0
- * Seamlessly tints the iOS status bar and avoids WebKit backdrop-filter clipping.
+ * bleedblend - v2.2.2
+ * Zero-config Safari chrome tinting across iPhone, iPad, and Mac;
+ * avoids WebKit backdrop-filter clipping.
  */
 
 :root {

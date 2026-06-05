@@ -1,0 +1,40 @@
+# CVER OSS shared delivery baseline — Node CI (dim 7).
+# Source template: ~/cver-oss-baseline/workflows/node-ci.yml
+# CI runs the deterministic gate: pure decision-logic suite + release readiness.
+# The integration suite (test:auto) drives real Chrome over CDP and is bound to
+# `prepublishOnly`, so it runs locally (where Chrome lives) before every publish
+# — keeping CI fast and robust rather than depending on a browser in the runner.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install --no-audit --no-fund
+          fi
+
+      - name: Test (pure decision-logic suite)
+        run: npm run test:pure
+
+      - name: Build
+        run: npm run build --if-present
+
+      - name: Release readiness
+        run: node scripts/check-release-readiness.mjs
