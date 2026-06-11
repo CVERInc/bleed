@@ -1,11 +1,11 @@
 # bleedblend
 
-> **Zero-config Safari chrome tinting.** Paints the browser chrome to match your page content at each viewport edge — across iPhone, iPad, and Mac. Gradients, sections, rubber-band overscroll, all handled automatically. One import. No theme-color juggling. No tint configuration. It just works.
+> **Zero-config Safari chrome tinting, tamed.** Safari 26 tints its chrome from your page content — by quirky, undocumented, version-shifting rules. bleedblend steers that native tinting so every viewport edge lands on the right color, across iPhone, iPad, and Mac. Gradients, sections, rubber-band overscroll, all handled automatically. One import. No theme-color juggling. It just works.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![NPM Version](https://img.shields.io/npm/v/bleedblend.svg?color=blue)](https://www.npmjs.com/package/bleedblend)
-[![Safari 26](https://img.shields.io/badge/Safari-26+-blue?logo=safari&logoColor=white)](#)
-[![Zero Config](https://img.shields.io/badge/Zero-Config-success)](#)
+[![Safari 26](https://img.shields.io/badge/Safari-26+-blue?logo=safari&logoColor=white)](#background-the-safari-26-tinting-model)
+[![Zero Config](https://img.shields.io/badge/Zero-Config-success)](#what-you-get)
 
 > 🎮 **[Live Demo →](https://cverinc.github.io/bleedblend/)**
 
