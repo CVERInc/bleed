@@ -7,6 +7,8 @@
 [![Safari 26](https://img.shields.io/badge/Safari-26+-blue?logo=safari&logoColor=white)](#background-the-safari-26-tinting-model)
 [![Zero Config](https://img.shields.io/badge/Zero-Config-success)](#what-you-get)
 
+🌐 日本語の紹介 → [cver.net/ja-jp/oss/bleedblend](https://cver.net/ja-jp/oss/bleedblend) ・ 繁體中文介紹 → [cver.net/zh-tw/oss/bleedblend](https://cver.net/zh-tw/oss/bleedblend)
+
 > 🎮 **[Live Demo →](https://cverinc.github.io/bleedblend/)**
 
 ---
