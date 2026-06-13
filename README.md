@@ -164,6 +164,8 @@ For the bottom edge specifically:
   - **Designed end-zone** — a gradient ending, or a closing section ≥ 50% of the viewport, or a flat page whose background already matches the footer: overwrite `<html>`, `<body>`, **and** `body::before` so rubber-band overscroll tints the same color and you don't see the html-bg fallback leak through.
   - **Incidental footer** — a short, high-contrast footer sitting over a flat light page: tint **`<html>` only**. The rubber-band-exposed strip gets the right color, but the *visible* body is left alone so it doesn't flood to the footer color.
 
+> **Verification status (footer-flood fix):** the end-zone-vs-incidental *decision logic* is covered by the headless test matrix (cases N–N5, run under an iOS UA override). The *native overscroll paint* itself only renders on real iOS Safari 26+ (`if (!isIOS) return`), so this classification has **not yet been confirmed on a real iPhone**. Treat the flat-page no-flood behavior as **unverified on device** until the device regression matrix (designed gradient stays seamless / flat page does not flood / rubber-band tints correctly) has been run. If a real page mis-classifies, `overscrollFill: 'never'` is the immediate escape hatch.
+
 For the top edge: always `SAFE_NATURAL` unless the user owns it via `.bleedblend-top`. Top chrome should feel light.
 
 ---
