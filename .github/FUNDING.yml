@@ -1,0 +1,5 @@
+# Funding links shown on the GitHub repo sidebar.
+# `custom` is just a link — it does NOT enrol GitHub Sponsors. Adding a `github:`
+# org/user handle requires enabling Sponsors on that account first (done by a human).
+custom:
+  - "https://oss.cver.net/bleedblend/"
