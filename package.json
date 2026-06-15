@@ -29,8 +29,11 @@
   "scripts": {
     "test": "node -e \"require('./src/tailwind-plugin.js'); console.log('bleedblend loaded')\"",
     "test:pure": "node test/pure.mjs",
+    "test:units": "node test/units.mjs",
+    "test:ci": "node test/pure.mjs && node test/units.mjs",
     "test:auto": "node test/integration.mjs",
-    "test:all": "node test/pure.mjs && node test/integration.mjs"
+    "test:all": "node test/pure.mjs && node test/units.mjs && node test/integration.mjs",
+    "prepublishOnly": "npm run test:all && node scripts/check-release-readiness.mjs"
   },
   "keywords": [
     "ios",
@@ -47,7 +50,7 @@
     "css",
     "zero-config"
   ],
-  "author": "",
+  "author": "CVER Inc. <hi@cver.net> (https://cver.net)",
   "license": "MIT",
   "repository": {
     "type": "git",
