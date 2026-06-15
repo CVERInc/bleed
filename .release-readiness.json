@@ -1,0 +1,9 @@
+{
+  "versionSources": [
+    "package.json",
+    { "path": "src/index.css", "regex": "bleedblend - v(\\d+\\.\\d+\\.\\d+)" }
+  ],
+  "changelog": "CHANGELOG.md",
+  "requireChangelog": true,
+  "pack": true
+}
