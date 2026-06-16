@@ -6,8 +6,18 @@ project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [2.3.0] - 2026-06-16
+
 ### Added
 
+- `.bleedblend-push` — a layout modifier for `.bleedblend-top` / `.bleedblend-bottom`
+  that flips the bar from `position: fixed` (overlay) to `position: sticky`, so it
+  reserves its own row and pushes content away from the edge instead of covering it
+  (e.g. a top language banner that shoves the page down rather than hiding the logo
+  under it). It still tints the chrome: Safari 26 samples top/bottom `sticky`
+  elements the same as `fixed`, and the controller's `STICKY_OWNED` detection is
+  position-agnostic. Mirrored in `index.css` and the Tailwind plugin (parity guarded
+  by `test/units.mjs`).
 - Delivery baseline (CVER OSS dim 7): a CI workflow that runs the deterministic
   decision-logic suite plus the shared release-readiness gate, a tracked
   `hooks/pre-push` guard, and a `.github/FUNDING.yml`.

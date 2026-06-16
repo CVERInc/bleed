@@ -43,6 +43,12 @@ module.exports = plugin(function bleedblend({ addUtilities, addBase }) {
         '-webkit-backdrop-filter': 'none !important',
         backdropFilter: 'none !important',
       },
+      // Push variant — parity with index.css. Compound selector so position:sticky
+      // outranks the base .bleedblend-top / .bleedblend-bottom position:fixed and
+      // the bar reserves layout space (pushes content) instead of overlaying it.
+      '.bleedblend-top.bleedblend-push, .bleedblend-bottom.bleedblend-push': {
+        position: 'sticky',
+      },
       '.bleedblend-inner-blur': {
         '-webkit-backdrop-filter': 'blur(10px) saturate(140%)',
         backdropFilter: 'blur(10px) saturate(140%)',

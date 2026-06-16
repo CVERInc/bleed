@@ -127,6 +127,18 @@ Keep the frosted-glass look by moving the blur to an **inner** element with `.bl
 
 > **Prerequisite:** the cover viewport (`viewport-fit=cover`) must be in your **server-rendered `<head>`** — injecting it via JS after load is unreliable on iOS, and without it there's no safe-area for the bar to fill.
 
+#### Push content down instead of overlaying it (`.bleedblend-push`)
+
+By default `.bleedblend-top` / `.bleedblend-bottom` pin the bar `position: fixed`, so it floats *over* the page — a top bar sits on top of your content, which means a banner can cover the logo beneath it. Add **`.bleedblend-push`** to make the bar reserve its own space and shove content away from the edge instead:
+
+```html
+<div class="bleedblend-top bleedblend-push">
+  <!-- a language banner that pushes the page down instead of covering it -->
+</div>
+```
+
+It flips the bar to `position: sticky`: the bar takes a row in the normal layout (pushing content away from the edge) **and** stays pinned at the edge as you scroll — and it *still* tints the chrome, because Safari 26 samples a `sticky` top/bottom element the same as a `fixed` one, and bleedblend's `STICKY_OWNED` detection keys off the class, not the positioning. Compose it with `.bleedblend-top` or `.bleedblend-bottom`; on its own `.bleedblend-push` does nothing.
+
 ### Tailwind CSS integration
 
 ```js

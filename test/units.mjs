@@ -160,6 +160,20 @@ check(
   pluginUtils?.['.bleedblend-bottom']?.backdropFilter?.includes('none'),
 );
 
+// .bleedblend-push variant: must exist in both surfaces and set position:sticky,
+// so the bar reserves layout space (pushes content) instead of overlaying — and
+// the two surfaces must agree or a Tailwind user gets different behavior.
+check(
+  'index.css defines the .bleedblend-push variant as position:sticky',
+  /\.bleedblend-(top|bottom)\.bleedblend-push[^{]*\{[^}]*position:\s*sticky/s.test(css),
+);
+const pushKey = pluginUtils && Object.keys(pluginUtils).find((k) => k.includes('bleedblend-push'));
+check('plugin defines a .bleedblend-push variant', !!pushKey);
+check(
+  'plugin .bleedblend-push variant is position:sticky (parity with index.css)',
+  !!pushKey && pluginUtils[pushKey]?.position === 'sticky',
+);
+
 console.log('\n================ UNITS SUMMARY ================');
 console.log(`pass=${pass} fail=${fail}`);
 if (fails.length) { console.log('FAILED:\n  - ' + fails.join('\n  - ')); process.exit(1); }
