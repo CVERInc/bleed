@@ -296,6 +296,13 @@ The `.bleedblend-top` / `.bleedblend-bottom` CSS classes and the Tailwind plugin
 
 bleedblend started as a bug. While building [reef](https://reef.cver.net), a `backdrop-filter` sticky banner kept getting its blur clipped at the notch — WebKit forces the filter's sample point below the safe area, exposing the background underneath. Instead of fighting it, we painted that exposed strip on purpose, so the status bar took the brand color cleanly. That bug-turned-feature insight got battle-tested across [cver.net](https://www.cver.net)'s full-bleed gradient + sections + footer homepage — where every iOS quirk in the "quirks navigated" list was discovered the hard way — and then extracted into bleedblend. It's not a weekend toy; it's the consolidation of a tool that shipped in production first.
 
+## Related
+
+bleedblend's [live demo](https://cverinc.github.io/bleedblend/) is assembled from two pieces we extracted as their own zero-dependency packages:
+
+- **[liquidframe](https://github.com/CVERInc/liquidframe)** — the pure-CSS iPhone mockup with realistic iOS 26 Liquid Glass Safari chrome that frames the demo.
+- **[demodeck](https://github.com/CVERInc/demodeck)** — the dark control-panel template behind the demo's settings UI.
+
 ## License
 
 MIT
