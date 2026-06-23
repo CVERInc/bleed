@@ -1,6 +1,6 @@
 # bleedblend
 
-> **Zero-config Safari chrome tinting, tamed.** Safari 26 tints its chrome from your page content — by quirky, undocumented, version-shifting rules. bleedblend steers that native tinting so every viewport edge lands on the right color, across iPhone, iPad, and Mac. Gradients, sections, rubber-band overscroll, all handled automatically. One import. No theme-color juggling. It just works.
+> **Zero-config Safari chrome tinting, tamed.** Safari 26 tints its chrome from your page content — by quirky, undocumented, version-shifting rules. bleedblend steers that native tinting so every viewport edge lands on the right color, across iPhone, iPad, and Mac. Gradients, sections, and rubber-band overscroll are handled automatically — one import, no `theme-color` juggling.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![NPM Version](https://img.shields.io/npm/v/bleedblend.svg?color=blue)](https://www.npmjs.com/package/bleedblend)
@@ -9,11 +9,11 @@
 
 🌐 [日本語](https://cver.net/ja-jp/oss/bleedblend) · [한국어](https://cver.net/ko-kr/oss/bleedblend) · [繁體中文](https://cver.net/zh-tw/oss/bleedblend)
 
-> 🎮 **[Live Demo →](https://cverinc.github.io/bleedblend/)**
+> **[Live demo →](https://cverinc.github.io/bleedblend/)**
 
 ---
 
-## The Despair
+## Why this exists
 
 Safari 26 derives the chrome tint (status bar + URL bar) from **whatever sits at the viewport edge** — the same model across **iPhone, iPad, and Mac**. But the rules are quirky, undocumented, and shift between versions, and on **iPhone and iPad they bite hardest**:
 
@@ -24,7 +24,7 @@ Safari 26 derives the chrome tint (status bar + URL bar) from **whatever sits at
 - `position: fixed` elements tint chrome correctly… except when they don't, depending on `opacity`, `display`, viewport edge proximity, and dark-mode mood.
 - You add `body::before { position: fixed; gradient }` to fake the bg — but it **stretches into the overscroll exposed area** and overrides whatever you set on `<html>` and `<body>`.
 
-This is a rabbit hole we fell down building real products. `bleedblend` walks it for you — and goes one step further: it doesn't just patch the quirks, it hands you the controls to make any sticky header, footer, or banner tint the chrome **on purpose**, across the whole Safari family.
+These are the quirks we hit building real products. `bleedblend` handles them for you — and goes one step further: it hands you the controls to make any sticky header, footer, or banner tint the chrome **on purpose**, across the whole Safari family.
 
 ---
 
@@ -175,8 +175,6 @@ For the bottom edge specifically:
 - **Last section** (footer at page-end): engage and tint the section color. How far that tint reaches into the background depends on what *kind* of ending it is (controlled by `overscrollFill`, default `'auto'`):
   - **Designed end-zone** — a gradient ending, or a closing section ≥ 50% of the viewport, or a flat page whose background already matches the footer: overwrite `<html>`, `<body>`, **and** `body::before` so rubber-band overscroll tints the same color and you don't see the html-bg fallback leak through.
   - **Incidental footer** — a short, high-contrast footer sitting over a flat light page: tint **`<html>` only**. The rubber-band-exposed strip gets the right color, but the *visible* body is left alone so it doesn't flood to the footer color.
-
-> **Verification status (footer-flood fix):** the end-zone-vs-incidental *decision logic* is covered by the headless test matrix (cases N–N5, run under an iOS UA override). The *native overscroll paint* itself only renders on real iOS Safari 26+ (`if (!isIOS) return`), so this classification has **not yet been confirmed on a real iPhone**. Treat the flat-page no-flood behavior as **unverified on device** until the device regression matrix (designed gradient stays seamless / flat page does not flood / rubber-band tints correctly) has been run. If a real page mis-classifies, `overscrollFill: 'never'` is the immediate escape hatch.
 
 For the top edge: always `SAFE_NATURAL` unless the user owns it via `.bleedblend-top`. Top chrome should feel light.
 
