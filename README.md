@@ -26,6 +26,8 @@ Safari 26 derives the chrome tint (status bar + URL bar) from **whatever sits at
 
 These are the quirks we hit building real products. `bleedblend` handles them for you — and goes one step further: it hands you the controls to make any sticky header, footer, or banner tint the chrome **on purpose**, across the whole Safari family.
 
+*The longer story — the bug in [reef](https://reef.cver.net), the Safari 26 rabbit hole, and the turn from fighting the chrome to driving it — is on the [devlog](https://cver.net/devlog/bleedblend-origin).*
+
 ---
 
 ## What you get
