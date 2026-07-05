@@ -55,7 +55,23 @@ function bothEngines(name, innerHeight, lastSection, fill, expected) {
   });
 }
 
-console.log('=== isDesignedEndZone: designed end-zones flood, incidental footers do not ===');
+console.log('=== dual-implementation sync-marker: utils.js ⇄ utils.mjs ===');
+
+// Mechanical drift guard: each file's header carries a `sync-marker: vN` line
+// bumped whenever the pair is edited together. This doesn't verify semantic
+// equivalence — it just catches "edited one file, forgot the other."
+{
+  const syncMarker = (text) => (text.match(/sync-marker:\s*(\S+)/) || [])[1] || null;
+  const jsText = readFileSync(join(root, 'src', 'utils.js'), 'utf8');
+  const mjsText = readFileSync(join(root, 'src', 'utils.mjs'), 'utf8');
+  const jsMarker = syncMarker(jsText);
+  const mjsMarker = syncMarker(mjsText);
+  check('utils.js has a sync-marker', !!jsMarker);
+  check('utils.mjs has a sync-marker', !!mjsMarker);
+  check(`utils.js sync-marker (${jsMarker}) ≡ utils.mjs sync-marker (${mjsMarker})`, jsMarker != null && jsMarker === mjsMarker);
+}
+
+console.log('\n=== isDesignedEndZone: designed end-zones flood, incidental footers do not ===');
 
 // A short, high-contrast footer over a flat light page → incidental, NO flood.
 // This is the exact footer-flood regression the classifier exists to prevent.

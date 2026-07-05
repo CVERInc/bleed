@@ -6,6 +6,8 @@
  * paints status bar + URL bar to match the page content at each viewport
  * edge — gradient interp, opaque sections, page-end overscroll all handled.
  *
+ * ESM source of truth; src/utils.js is the CommonJS mirror. Keep them in sync.
+ * sync-marker: v1
  * See HANDOFF.md (in repo root during dev) for the mental model and the
  * iOS 26 quirks this library navigates around.
  */
@@ -96,7 +98,7 @@ export function isOpaque(colorStr) {
 
 export function colorsClose(a, b, threshold = 8) {
   if (!a || !b) return false;
-  return Math.abs(a.r - b.r) < threshold && Math.abs(a.g - b.g) < threshold && Math.abs(a.b - b.b) < threshold;
+  return Math.abs(a.r - b.r) <= threshold && Math.abs(a.g - b.g) <= threshold && Math.abs(a.b - b.b) <= threshold;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -424,7 +426,7 @@ function ensureBeforeOverride() {
 }
 
 // One-time injection of CSS transitions on html / body / body::before
-// background so the page-end色 overwrite fades smoothly instead of snapping.
+// background so the page-end overwrite fades smoothly instead of snapping.
 function ensureTransitionStyle() {
   let el = document.getElementById('bleedblend-transition-style');
   if (el) return el;
@@ -483,7 +485,7 @@ export function createBleedblendAuto(options = {}) {
   function resolveEdge(edge, userOwned, boundary, lastSection, probeY) {
     if (userOwned) return { state: 'STICKY_OWNED', color: null };
     if (edge === 'top') {
-      // Top永遠 SAFE_NATURAL: chrome top stays light/unobtrusive. Safari
+      // Top is always SAFE_NATURAL: chrome top stays light/unobtrusive. Safari
       // naturally samples top edge content — that's correct tinting without
       // bleed intervention. Sticky-navs take STICKY_OWNED above.
       return { state: 'SAFE_NATURAL', color: null };

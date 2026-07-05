@@ -1,7 +1,8 @@
-/* VENDORED — do not edit here. Synced verbatim from CVERInc/liquidframe @ f36c2b0.
+/* VENDORED — do not edit here. Synced verbatim from CVERInc/liquidframe — see
+   upstream for the current version.
    This demo dogfoods its own spinoff: the phone frame is liquidframe's contract
    (.phone-frame + .chrome-* + --chrome-top/--chrome-bot/--screen-bg/--status-fg).
-   To update, re-copy liquidframe.css from upstream and bump the SHA above.
+   To update, re-copy liquidframe.css from upstream.
    bleedblend-only styles (fake page content, banners, inner-blur) live in bleedblend-demo.css. */
 
 /* ===========================================================================

@@ -2,6 +2,7 @@
  * bleedblend v2 — utils (CommonJS)
  *
  * CommonJS mirror of utils.mjs. Keep these two files in sync.
+ * sync-marker: v1
  * See utils.mjs for documentation and HANDOFF.md for the mental model.
  */
 
@@ -94,7 +95,7 @@ function isOpaque(colorStr) {
 function colorsClose(a, b, threshold) {
   if (!a || !b) return false;
   const t = threshold == null ? 8 : threshold;
-  return Math.abs(a.r - b.r) < t && Math.abs(a.g - b.g) < t && Math.abs(a.b - b.b) < t;
+  return Math.abs(a.r - b.r) <= t && Math.abs(a.g - b.g) <= t && Math.abs(a.b - b.b) <= t;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
