@@ -115,7 +115,7 @@ import 'bleedblend/style';
 **This is the recipe that *makes* a sticky bar tint — not just a "defer" flag for bars that already work.** The class does two things that turn "doesn't tint" into "tints":
 
 - **Pins it `position: fixed`, full-width, with `safe-area-inset` padding** — so it sits below the notch and Safari samples it as an edge element.
-- **Strips `backdrop-filter` off the outer element.** This is the **#1 reason a sticky nav silently refuses to tint**: a frosted-glass blur on the safe-area layer triggers WebKit's safe-area *clipping* bug and Safari stops sampling the bar. **If your bar looks perfect on screen but the chrome stays plain white, this is almost always why.**
+- **Strips `backdrop-filter` off the outer element.** This is the **#1 reason a sticky nav silently refuses to tint**: a frosted-glass blur on the sampled bar makes Safari stop sampling it, and the chrome falls back to the page background. It's the `backdrop-filter` compositing layer itself, not a safe-area quirk — it reproduces on **macOS Safari too**, which has no safe-area. **If your bar looks perfect on screen but the chrome stays plain white, this is almost always why.**
 
 Keep the frosted-glass look by moving the blur to an **inner** element with `.bleedblend-inner-blur` (the outer stays blur-free so sampling survives):
 
@@ -154,7 +154,7 @@ Then use `bleedblend-top`, `bleedblend-bottom`, and `bleedblend-inner-blur` util
 
 ```html
 <header class="bleedblend-top bg-emerald-700 text-white p-4">
-  <!-- Sticky header, no clipping bug -->
+  <!-- Sticky header: outer stays blur-free so chrome sampling survives -->
 </header>
 ```
 
@@ -251,7 +251,7 @@ What bleedblend actually contributes differs per surface:
 |---|---|---|
 | **iPhone Safari 26+** | Present, but quirky: bottom URL bar, rubber-band overscroll leaks `<html>` bg, compact tab bar shifts the sample point, `theme-color` ignored. | **Actively tames it.** JS runs: edge probing, gradient interpolation, 12px override tint, three-layer overscroll overwrite. This is the hard part. |
 | **iPad Safari 26+** | Same model as iPhone (iPadOS reports as `MacIntel` + touch). | **Actively tames it** — same code path as iPhone. |
-| **Mac Safari 26+** | Present and **well-behaved**: top toolbar only, driven by `<body>` bg, no bottom chrome, no rubber-band leak. | **Deliberately steps back** (`if (!isIOS) return` → tint elements `display: none`). The desktop model needs no taming, so bleedblend defers entirely to Safari's native sampling. Tinting you see on Mac is 100% Safari — and that's correct, not a gap. |
+| **Mac Safari 26+** | **Mostly well-behaved**: top toolbar only, driven by `<body>` bg or a top fixed/sticky element, no bottom chrome, no rubber-band leak. **One shared gap:** a `backdrop-filter` on the sampled element disables tint sampling on Mac too — no safe-area involved, so it's the compositing layer, not a notch quirk. | **Steps back today** (`if (!isIOS) return` → tint elements `display: none`): the common desktop cases need no taming, so bleedblend defers to Safari's native sampling. The `backdrop-filter` gap is the exception — bleedblend stays iOS-focused here; on Mac, apply the same "move the blur to an inner element" fix by hand. |
 | **iOS Safari 15–25** | No content sampling; `theme-color` honored. | Falls back to keeping `theme-color` in sync, plus tint rendering. |
 | **Chrome / Firefox (desktop)** | **No chrome tinting at all.** | No-op — there is nothing to tame. Tint elements stay `display: none` to avoid a stray colored band. |
 | **Chrome (Android)** | Tints the address bar via `theme-color` only (no edge sampling). | Currently no-op: the `theme-color` sync path exists internally but is gated behind `isIOS`. Unlocking it is tracked, not yet shipped/validated. |
