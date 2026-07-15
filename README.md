@@ -303,6 +303,8 @@ bleedblend's [live demo](https://cverinc.github.io/bleedblend/) is assembled fro
 - **[liquidframe](https://github.com/CVERInc/liquidframe)** — the pure-CSS iPhone mockup with realistic iOS 26 Liquid Glass Safari chrome that frames the demo.
 - **[demodeck](https://github.com/CVERInc/demodeck)** — the dark control-panel template behind the demo's settings UI.
 
+The whole CVER OSS family runs in your browser at **[oss.cver.net](https://oss.cver.net)**.
+
 ## License
 
 MIT
