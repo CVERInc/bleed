@@ -191,7 +191,7 @@ Things `bleedblend` figured out (the hard way) so you don't have to:
 - **`opacity: 0` is still sampled** — to truly "step back", you need `display: none`.
 - **`100lvh - 100svh` is a static value** (the max dynamic chrome height), not the current chrome height. Don't use it for tint sizing — pick a small constant (e.g. 12px) that satisfies Safari's ≥3px sampling threshold.
 - **`body::before { position: fixed; inset: 0 }` stretches into iOS rubber-band overscroll exposed area** and covers your `<html>` background. To paint overscroll a section color, you have to override all three: `<html>` bg, `<body>` bg, and `body::before` bg via injected `<style>`. But that three-layer overwrite is a *fixed full-viewport* layer, so on a flat light page with a short high-contrast footer it floods the whole visible background to the footer color. bleedblend now does the full overwrite **only for designed end-zones**; an incidental footer tints `<html>` alone (see `overscrollFill`).
-- **`safe-area-inset-*` reports `0` on iPhone Mirroring** — active probing is needed, with fallbacks for the 0 case.
+- **`safe-area-inset-top` reads `0` in portrait mobile Safari** (verified device-side — it's not an iPhone Mirroring artifact; the physical phone reports 0 too). So it can't be trusted to locate the status-bar edge: bleedblend measures the resolved inset and falls back to a small constant when it's 0.
 - **`transparent` keyword has a dark band during alpha transitions** (WebKit treats it as `rgba(0,0,0,0)` = black with alpha 0). Use `rgba(R,G,B,0)` instead if you ever need alpha-0.
 - **Boundary probe Y and "is this the last section" check must use the SAME Y** — otherwise you get a 12px flicker zone where one says "belt" and the other says "footer".
 
